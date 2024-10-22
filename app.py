@@ -48,26 +48,27 @@ def random_page():
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Pagina {page_num}</title>
             <style>
-                body {{
+                body {
                     text-align: center;
-                    font-family: 'Times New Roman', serif;
+                    font-family: 'cursive', cursive;
                     margin: 20px;
-                    line-height: 1.6;
-                }}
-                .book-page {{
+                    line-height: 1.6;  
+                    background-color: #663300;
+                }
+                .book-page {
                     border: 1px solid #ccc;
                     padding: 20px;
-                    background-color: #f9f9f9;
+                    background-color: #FFE5CC;
                     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-                }}
-                h1 {{
+                }
+                h1 {
                     text-align: center;
-                }}
-                footer {{
+                }
+                footer {
                     text-align: right;
                     font-size: 0.9em;
                     margin-top: 20px;
-                }}
+                }
             </style>
         </head>
         <body>
