@@ -49,12 +49,12 @@ def random_page():
             <title>Pagina {page_num}</title>
             <style>
                 body {{
+                    text-align: center;
                     font-family: 'Times New Roman', serif;
                     margin: 20px;
                     line-height: 1.6;
                 }}
                 .book-page {{
-                    text-align: center;
                     border: 1px solid #ccc;
                     padding: 20px;
                     background-color: #f9f9f9;
