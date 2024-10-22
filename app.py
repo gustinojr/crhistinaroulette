@@ -22,9 +22,9 @@ def extract_random_page(pdf_file):
         return str(e), None
 
 # Funzione per formattare il testo
-def format_text(text):
-    formatted_text = text.strip().replace('\n', '<br>')  # Usa <br> per andare a capo in HTML
-    return formatted_text
+#def format_text(text):
+#    formatted_text = text.strip().replace('\n', '<br>')  # Usa <br> per andare a capo in HTML
+#    return formatted_text
 
 # Endpoint per la route radice
 @app.route('/')
@@ -38,7 +38,7 @@ def random_page():
     page_text, page_num = extract_random_page(pdf_file)
 
     if page_text:
-        formatted_text = format_text(page_text)
+        formatted_text = page_text #format_text(page_text)
         # Restituisci una pagina HTML
         html_content = f"""
         <!DOCTYPE html>
@@ -48,27 +48,27 @@ def random_page():
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Pagina {page_num}</title>
             <style>
-                body {
+                body {{
                     text-align: center;
                     font-family: 'cursive', cursive;
                     margin: 20px;
                     line-height: 1.6;  
                     background-color: #663300;
-                }
-                .book-page {
+                }}
+                .book-page {{
                     border: 1px solid #ccc;
                     padding: 20px;
                     background-color: #FFE5CC;
                     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-                }
-                h1 {
+                }}
+                h1 {{
                     text-align: center;
-                }
-                footer {
+                }}
+                footer {{
                     text-align: right;
                     font-size: 0.9em;
                     margin-top: 20px;
-                }
+                }}
             </style>
         </head>
         <body>
