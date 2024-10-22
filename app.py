@@ -1,8 +1,15 @@
+import os
 from flask import Flask, jsonify
 import PyPDF2
 import random
 
 app = Flask(__name__)
+
+# Funzioni come definite prima...
+
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))  # Prendi la porta dall'ambiente, default a 5000
+    app.run(host='0.0.0.0', port=port, debug=True)
 
 # Funzione per estrarre una pagina casuale dal PDF
 def extract_random_page(pdf_file):
