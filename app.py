@@ -54,6 +54,7 @@ def random_page():
                     line-height: 1.6;
                 }}
                 .book-page {{
+                    text-align: center;
                     border: 1px solid #ccc;
                     padding: 20px;
                     background-color: #f9f9f9;
