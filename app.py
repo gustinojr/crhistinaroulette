@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template_string
 import PyPDF2
 import random
 
@@ -23,7 +23,7 @@ def extract_random_page(pdf_file):
 
 # Funzione per formattare il testo
 def format_text(text):
-    formatted_text = text.strip().replace('\n', '\n\n')
+    formatted_text = text.strip().replace('\n', '<br>')  # Usa <br> per andare a capo in HTML
     return formatted_text
 
 # Endpoint per la route radice
@@ -39,10 +39,46 @@ def random_page():
 
     if page_text:
         formatted_text = format_text(page_text)
-        return jsonify({
-            "page_number": page_num,
-            "content": formatted_text
-        })
+        # Restituisci una pagina HTML
+        html_content = f"""
+        <!DOCTYPE html>
+        <html lang="it">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Pagina {page_num}</title>
+            <style>
+                body {{
+                    font-family: 'Times New Roman', serif;
+                    margin: 20px;
+                    line-height: 1.6;
+                }}
+                .book-page {{
+                    border: 1px solid #ccc;
+                    padding: 20px;
+                    background-color: #f9f9f9;
+                    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+                }}
+                h1 {{
+                    text-align: center;
+                }}
+                footer {{
+                    text-align: right;
+                    font-size: 0.9em;
+                    margin-top: 20px;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="book-page">
+                <h1>Pagina {page_num}</h1>
+                <p>{formatted_text}</p>
+                <footer>© Bibbia CEI 2008</footer>
+            </div>
+        </body>
+        </html>
+        """
+        return render_template_string(html_content)
     else:
         return jsonify({"error": "Could not extract page"}), 500
 
