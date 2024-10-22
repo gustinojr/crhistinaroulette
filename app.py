@@ -15,25 +15,16 @@ def extract_random_page(pdf_file):
             if num_pages <= 2:
                 return "Il PDF ha troppo poche pagine per escludere la prima e l'ultima.", None
 
-            # Estrae una pagina casuale escludendo la prima e l'ultima
             random_page_num = random.randint(1, num_pages - 2)
             page = reader.pages[random_page_num]
             return page.extract_text(), random_page_num + 1
     except Exception as e:
         return str(e), None
 
-# Funzione per numerare automaticamente le righe di testo
-def format_numbered_text(text):
-    # Dividi il testo in righe, rimuovi eventuali spazi vuoti
-    lines = [line.strip() for line in text.split('\n') if line.strip()]
-    formatted_lines = []
-    
-    # Aggiungi la numerazione a ogni riga
-    for i, line in enumerate(lines, 1):  # Inizia la numerazione da 1
-        formatted_lines.append(f'<p><span class="line-number">{i}</span>{line}</p>')
-    
-    # Unisci le righe in un unico blocco HTML
-    return ''.join(formatted_lines)
+# Funzione per formattare il testo
+def format_text(text):
+    formatted_text = text.strip().replace('\n', '<br>')  # Usa <br> per andare a capo in HTML
+    return formatted_text
 
 # Endpoint per la route radice
 @app.route('/')
@@ -47,7 +38,7 @@ def random_page():
     page_text, page_num = extract_random_page(pdf_file)
 
     if page_text:
-        formatted_text = format_numbered_text(page_text)  # Usa la funzione aggiornata per numerare il testo
+        formatted_text = format_text(page_text)
         # Restituisci una pagina HTML
         html_content = f"""
         <!DOCTYPE html>
@@ -57,7 +48,6 @@ def random_page():
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Pagina {page_num}</title>
             <style>
-                /* CSS preesistente */
                 body {{
                     text-align: center;
                     font-family: 'cursive', cursive;
@@ -79,26 +69,12 @@ def random_page():
                     font-size: 0.9em;
                     margin-top: 20px;
                 }}
-                
-                /* Nuovo CSS per la numerazione delle righe */
-                p {{
-                    text-align: justify;
-                    margin-bottom: 20px;
-                }}
-                .line-number {{
-                    font-size: 0.9em;
-                    color: #555;
-                    display: inline-block;
-                    width: 30px;
-                    text-align: right;
-                    margin-right: 10px;
-                }}
             </style>
         </head>
         <body>
             <div class="book-page">
                 <h1>Pagina {page_num}</h1>
-                {formatted_text}  <!-- Testo numerato -->
+                <p>{formatted_text}</p>
                 <footer>© Bibbia CEI 2008</footer>
             </div>
         </body>
